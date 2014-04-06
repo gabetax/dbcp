@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: dev_database
+  pool: 5
+  username: dev_username
+  password: dev_password
+
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: staging_database
+  pool: 5
+  username: staging_username
+  password: staging_password
