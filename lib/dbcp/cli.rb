@@ -7,7 +7,6 @@ module Dbcp
       @logger.formatter = Proc.new do |severity, datetime, progname, msg|
         "#{datetime}: #{msg}\n"
       end
-
     end
 
     def start(argv)
@@ -38,6 +37,7 @@ module Dbcp
       snapshot_file = source.export
       @logger.info "importing #{snapshot_file.path} to #{destination.environment_name}..."
       destination.import snapshot_file
+      snapshot_file.delete
     end
 
     def usage

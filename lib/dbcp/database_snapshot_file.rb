@@ -7,5 +7,9 @@ module Dbcp
       @environment = environment
       @path = "/tmp/dbcp_#{Time.now.to_f}"
     end
+
+    def delete
+      environment.execute %W(rm #{path}).shelljoin
+    end
   end
 end

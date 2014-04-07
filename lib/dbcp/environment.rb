@@ -35,8 +35,6 @@ module Dbcp
       execute database.import_command(snapshot_file)
     end
 
-    private
-
     def execute(command)
       Kernel.system command
       raise ExecutionError.new "Execution failed with exit code #{$?.exitstatus}. Command was: #{command}" unless $?.success?

@@ -18,8 +18,9 @@ describe Dbcp::Cli do
       end
 
       it "clones the database" do
-        expect(source).to      receive(:export) { snapshot_file }
-        expect(destination).to receive(:import) { snapshot_file }
+        expect(source).to        receive(:export) { snapshot_file }
+        expect(destination).to   receive(:import) { snapshot_file }
+        expect(snapshot_file).to receive(:delete)
 
         subject.start ['staging']
       end
