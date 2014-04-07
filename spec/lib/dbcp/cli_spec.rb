@@ -8,13 +8,18 @@ describe Dbcp::Cli do
 
   describe "#start" do
     context "success" do
-      let(:source)      { double 'Dbcp::Environment', database: double(adapter: 'postgres'), environment_name: 'staging', export: snapshot_file }
-      let(:destination) { double 'Dbcp::Environment', database: double(adapter: 'postgres'), environment_name: 'development', import: nil }
-      let(:snapshot_file) { Dbcp::DatabaseSnapshotFile.new }
+      let(:source)      { double 'Dbcp::Environment', database: double(adapter: 'postgres'), environment_name: 'staging' }
+      let(:destination) { double 'Dbcp::Environment', database: double(adapter: 'postgres'), environment_name: 'development' }
+      let(:snapshot_file) { Dbcp::DatabaseSnapshotFile.new source }
+
+      before do
+        allow(Dbcp::Environment).to receive(:find).with('staging')     { source }
+        allow(Dbcp::Environment).to receive(:find).with('development') { destination }
+      end
 
       it "clones the database" do
-        allow(Dbcp::Environment).to receive(:find).with('staging') { source }
-        allow(Dbcp::Environment).to receive(:find).with('development') { destination }
+        expect(source).to      receive(:export) { snapshot_file }
+        expect(destination).to receive(:import) { snapshot_file }
 
         subject.start ['staging']
       end

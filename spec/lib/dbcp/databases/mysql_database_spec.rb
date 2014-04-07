@@ -10,7 +10,7 @@ describe Dbcp::MysqlDatabase do
     })
   end
 
-  let(:snapshot_file) { Dbcp::DatabaseSnapshotFile.new }
+  let(:snapshot_file) { Dbcp::DatabaseSnapshotFile.new double }
 
   describe "#export_command" do
     specify { expect(subject.export_command snapshot_file).to match 'mysqldump' }

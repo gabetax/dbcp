@@ -26,7 +26,7 @@ module Dbcp
     end
 
     def export
-      DatabaseSnapshotFile.new.tap do |snapshot_file|
+      DatabaseSnapshotFile.new(self).tap do |snapshot_file|
         execute database.export_command(snapshot_file)
       end
     end
