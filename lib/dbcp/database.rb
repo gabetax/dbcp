@@ -4,14 +4,18 @@ module Dbcp
 
     class << self
       def build(args)
-        klass = case args[:adapter]
-        when /postgres./
+        klass_for_adapter(args['adapter']).new args
+      end
+
+      def klass_for_adapter(adapter)
+        klass = case adapter
+        when /mysql/
+          MysqlDatabase
+        when /postgres/
           PostgresDatabase
         else
-          raise UnsupportedDatabaseAdapter.new("Unsupported database adapter: #{args[:adapter]}")
+          raise UnsupportedDatabaseAdapter.new("Unsupported database adapter: #{adapter}")
         end
-
-        klass.new args
       end
     end
 
@@ -20,6 +24,7 @@ module Dbcp
       attribute :adapter
       attribute :database
       attribute :host, String, default: 'localhost'
+      attribute :socket
       attribute :username
       attribute :password
     end
