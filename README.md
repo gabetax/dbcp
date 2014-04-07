@@ -1,5 +1,8 @@
 # dbcp
 
+[![Build Status](https://travis-ci.org/gabetax/dbcp.svg?branch=master)](https://travis-ci.org/gabetax/dbcp)
+[![Code Climate](https://codeclimate.com/github/gabetax/dbcp.png)](https://codeclimate.com/github/gabetax/dbcp)
+
 Copy Postgres or MySQL databases between application environments.
 
 Setting an employee up to work on a web application for the first time is time consuming. Tools like [Vagrant](http://www.vagrantup.com) have made it easy to get your environment setup, but you still need to get your relational database setup. In rails you can load your `db/schema.rb` and hope that `db/seeds.rb` is well curated, but seldom has enough to let a developer hit the ground running. Working with your production database while developing is extremely convenient. The [parity](http://12factor.net/dev-prod-parity) helps preview database performance. It also makes investigating data-specific bugs much easier. The goal of `dbcp` is to make copying databases between development, staging, and production environments as easy as copying a file on your local disk.
