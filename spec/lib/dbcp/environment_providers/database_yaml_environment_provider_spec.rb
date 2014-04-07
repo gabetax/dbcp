@@ -16,6 +16,20 @@ describe Dbcp::DatabaseYamlEnvironmentProvider do
         expect(environment.database.username).to eq 'dev_username'
         expect(environment.database.password).to eq 'dev_password'
       end
+
+      context "without ssh_uri" do
+        it "executes on localhost" do
+          environment = subject.find 'development'
+          expect(environment.execution_host).to be_a Dbcp::LocalExecutionHost
+        end
+      end
+
+      context "with ssh_uri" do
+        it "executes on remote host" do
+          environment = subject.find 'staging'
+          expect(environment.execution_host).to be_a Dbcp::SshExecutionHost
+        end
+      end
     end
     context "when environment doesn't exist" do
       specify { expect(subject.find 'does-not-exist').to be_nil }

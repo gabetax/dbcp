@@ -34,10 +34,16 @@ module Dbcp
       end
 
       @logger.info "exporting #{source.environment_name}..."
-      snapshot_file = source.export
-      @logger.info "importing #{snapshot_file.path} to #{destination.environment_name}..."
-      destination.import snapshot_file
-      snapshot_file.delete
+      source_snapshot_file = source.export
+
+      @logger.info "transferring data..."
+      destination_snapshot_file = source_snapshot_file.transfer_to(destination)
+
+      @logger.info "importing #{destination_snapshot_file.path} to #{destination.environment_name}..."
+      destination.import destination_snapshot_file
+
+      source_snapshot_file.delete
+      destination_snapshot_file.delete if source_snapshot_file != destination_snapshot_file
     end
 
     def usage

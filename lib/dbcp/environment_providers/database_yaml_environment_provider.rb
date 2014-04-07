@@ -29,7 +29,8 @@ module Dbcp
     def build_environment(environment_name, environment_hash)
       Environment.new({
         environment_name: environment_name,
-        database:         Database.build(environment_hash)
+        database:         Database.build(environment_hash),
+        execution_host:   ExecutionHost.build(environment_hash)
       })
     end
   end

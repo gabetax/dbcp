@@ -16,14 +16,15 @@ describe Dbcp::Environment do
 
 
   describe "import/export" do
-    subject { Dbcp::Environment.new database: database }
-    let(:database) { double 'Dbcp::Database', to_hash: {}, export_command: double, import_command: double }
-    before { allow(Kernel).to receive(:system) }
+    subject { Dbcp::Environment.new database: database, execution_host: execution_host }
+    let(:database) { double 'Dbcp::Database', export_command: double, import_command: double }
+    let(:execution_host) { double 'Dbcp::ExecutionHost', execute: nil }
+    # before { allow(Kernel).to receive(:system) }
 
     describe "#export" do
       it "executes the database's export command" do
         subject.export
-        expect(Kernel).to have_received(:system).with(database.export_command)
+        expect(subject.execution_host).to have_received(:execute).with(database.export_command)
       end
 
       it "returns the snapshot file" do
@@ -35,7 +36,7 @@ describe Dbcp::Environment do
       let(:snapshot_file) { double }
       it "executes the database's import command" do
         subject.import snapshot_file
-        expect(Kernel).to have_received(:system).with(database.import_command)
+        expect(subject.execution_host).to have_received(:execute).with(database.import_command)
       end
     end
   end

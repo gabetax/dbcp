@@ -23,22 +23,17 @@ module Dbcp
     values do
       attribute :environment_name, String
       attribute :database,         Database
+      attribute :execution_host,   ExecutionHost
     end
 
     def export
       DatabaseSnapshotFile.new(self).tap do |snapshot_file|
-        execute database.export_command(snapshot_file)
+        execution_host.execute database.export_command(snapshot_file)
       end
     end
 
     def import(snapshot_file)
-      execute database.import_command(snapshot_file)
-    end
-
-    def execute(command)
-      Kernel.system command
-      raise ExecutionError.new "Execution failed with exit code #{$?.exitstatus}. Command was: #{command}" unless $?.success?
+      execution_host.execute database.import_command(snapshot_file)
     end
   end
-
 end
