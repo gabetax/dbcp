@@ -37,17 +37,31 @@ Environment credentials can be defined in the following providers:
 
 Rails defines credentials for its database environments in a file at [`config/database.yml`](https://github.com/rails/rails/blob/master/guides/code/getting_started/config/database.yml). By default this file is generated with only development and test environments, but any additional environments added will be leveraged by `dbcp`. Although this is a rails convention, `dbcp` parses this file outside of any framework, so it will work even if you're using this convention in another framework.
 
-The database export or import can be executed on a remote host over ssh and then copied between environment hosts if you specify the remote host via an `ssh_uri` entry in the database.yml. This is helpful if the database host only allows connections from specific servers.
+The database export or import can be executed on a remote host over ssh and then copied between environment hosts if you specify the remote host via an `ssh_uri` entry in the database.yml. This is helpful if the database host only allows connections from specific servers. If your `ssh_uri` optionally includes a path to your application root on the remote server, dbcp will load the database credentials from the remote server's config/database.yml.
 
 Example config/database.yml:
 
 ```yaml
+# Local database
+development:
+  adapter:  postgresql
+  encoding: unicode
+  pool: 5
+  database: development_database
+  username: development_username
+  password: development_password
+
+# Remote database, credentials provided locally, executed from remote host over ssh
 staging:
   adapter:  postgresql
   database: staging_database
   username: staging_username
   password: staging_password
-  ssh_uri:  ssh://deploy@staging.example.com/www/staging.example.com/current
+  ssh_uri:  ssh://deploy@staging.example.com
+
+# Remote database, credentials fetched over ssh, executed from remote host over ssh
+production:
+  ssh_uri:  ssh://deploy@production.example.com/www/production.example.com/current
 ```
 
     $ dbcp staging development

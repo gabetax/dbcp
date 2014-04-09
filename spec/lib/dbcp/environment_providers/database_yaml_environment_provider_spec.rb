@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe Dbcp::DatabaseYamlEnvironmentProvider do
   subject { Dbcp::DatabaseYamlEnvironmentProvider.new path }
-  let(:path) { File.expand_path('../../../../fixtures/config/database.yml', __FILE__) }
+  let(:path) { 'config/database.yml' }
+
+  extend ExecuteInDirectory
+  execute_in_directory(File.expand_path('../../../../fixtures', __FILE__))
 
   describe "#find" do
     context "when environment exists" do
@@ -32,10 +35,25 @@ describe Dbcp::DatabaseYamlEnvironmentProvider do
           expect(environment.execution_host).to be_a Dbcp::SshExecutionHost
         end
       end
+
+      context "without database definition, but with ssh_uri" do
+        let(:remote_yaml) { File.read remote_yaml_path }
+        let(:remote_yaml_path) { File.expand_path('../../../../fixtures/config/remote_database.yml', __FILE__) }
+        it "fetches database definition from database.yml on remote host" do
+          allow_any_instance_of(Dbcp::SshExecutionHost).to receive(:download).with('/www/staging.example.com/current/config/database.yml') { remote_yaml }
+          environment = subject.find 'staging_ssh_only'
+          expect(environment.database).to be_a Dbcp::PostgresDatabase
+          expect(environment.database.database).to eq 'remote_staging_database'
+          expect(environment.database.username).to eq 'remote_staging_username'
+          expect(environment.database.password).to eq 'remote_staging_password'
+        end
+      end
     end
+
     context "when environment doesn't exist" do
       specify { expect(subject.find 'does-not-exist').to be_nil }
     end
+
     context "when file doesn't exist" do
     let(:path) { File.expand_path('../../../../fixtures/config/database-does-not-exist.yml', __FILE__) }
       specify { expect(subject.find 'development').to be_nil }

@@ -65,7 +65,8 @@ module Dbcp
       raise ExecutionError.new "Execution failed with exit code #{$?.exitstatus}. Command was: #{command}" if exitstatus > 0
     end
 
-    def download(source_path, destination_path)
+    # Omitting destination_path will return file contents as a string
+    def download(source_path, destination_path = nil)
       Net::SFTP.start host, username do |ssh|
         return ssh.download! source_path, destination_path
       end

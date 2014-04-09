@@ -1,0 +1,7 @@
+staging_ssh_only:
+  adapter: postgresql
+  encoding: unicode
+  database: remote_staging_database
+  pool: 5
+  username: remote_staging_username
+  password: remote_staging_password

@@ -1,4 +1,5 @@
 require 'logger'
+require 'shellwords'
 require 'virtus'
 require 'dbcp/cli'
 require 'dbcp/database'

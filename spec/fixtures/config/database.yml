@@ -15,4 +15,7 @@ staging:
   pool: 5
   username: staging_username
   password: staging_password
+  ssh_uri: ssh://deploy@staging.example.com
+
+staging_ssh_only:
   ssh_uri: ssh://deploy@staging.example.com/www/staging.example.com/current

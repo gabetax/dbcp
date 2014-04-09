@@ -1,5 +1,6 @@
 module Dbcp
   class Database
+    class BlankDatabaseDefinition < StandardError; end
     class UnsupportedDatabaseAdapter < StandardError; end
 
     class << self
@@ -13,6 +14,8 @@ module Dbcp
           MysqlDatabase
         when /postgres/
           PostgresDatabase
+        when nil, ''
+          raise BlankDatabaseDefinition.new("No database adapter was provided.")
         else
           raise UnsupportedDatabaseAdapter.new("Unsupported database adapter: #{adapter}")
         end
