@@ -9,7 +9,7 @@ module Dbcp
         '--file',     snapshot_file.path,
         '--format',   'c',
         database
-      ].flatten.shelljoin
+      ].flatten.compact.shelljoin
     end
 
     def import_command(snapshot_file)
@@ -21,7 +21,7 @@ module Dbcp
         '--dbname',   database,
         '--clean',
         snapshot_file.path
-      ].flatten.shelljoin
+      ].flatten.compact.shelljoin
     end
 
     private
