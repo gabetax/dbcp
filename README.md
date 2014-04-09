@@ -50,13 +50,20 @@ staging:
   ssh_uri:  ssh://deploy@staging.example.com/www/staging.example.com/current
 ```
 
+    $ dbcp staging development
+
+### URI
+
+You can use a database URI in place of an environment name as follows:
+
+    $ dbcp postgres://my_username:my_pass@db.example.com/my_database development
+
 ## Roadmap
 
 The following features are pending:
 
 Providers:
 
-- URL passed in as environment
 - capistrano task
 - heroku, inferred from git remotes
 

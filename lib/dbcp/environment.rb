@@ -4,7 +4,8 @@ module Dbcp
 
   class Environment
     ENVIRONMENT_PROVIDERS = [
-      DatabaseYamlEnvironmentProvider.new('config/database.yml')
+      DatabaseYamlEnvironmentProvider.new('config/database.yml'),
+      UriEnvironmentProvider.new
     ]
 
     class << self
