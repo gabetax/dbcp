@@ -24,6 +24,7 @@ module Dbcp
       attribute :adapter
       attribute :database
       attribute :host, String, default: 'localhost'
+      attribute :port, Fixnum
       attribute :socket
       attribute :username
       attribute :password

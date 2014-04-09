@@ -3,6 +3,8 @@ development:
   encoding: unicode
   database: dev_database
   pool: 5
+  host: db.example.com
+  port: 6543
   username: dev_username
   password: dev_password
 

@@ -12,6 +12,8 @@ describe Dbcp::DatabaseYamlEnvironmentProvider do
         expect(environment.database).to be_a Dbcp::Database
         expect(environment.environment_name).to  eq 'development'
         expect(environment.database.adapter).to  eq 'postgresql'
+        expect(environment.database.host).to     eq 'db.example.com'
+        expect(environment.database.port).to     eq 6543
         expect(environment.database.database).to eq 'dev_database'
         expect(environment.database.username).to eq 'dev_username'
         expect(environment.database.password).to eq 'dev_password'
