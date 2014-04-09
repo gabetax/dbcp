@@ -1,5 +1,3 @@
-require 'pry'
-
 require 'logger'
 require 'virtus'
 require 'dbcp/cli'
