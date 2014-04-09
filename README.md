@@ -5,7 +5,9 @@
 
 Copy Postgres or MySQL databases between application environments.
 
-Setting an employee up to work on a web application for the first time is time consuming. Tools like [Vagrant](http://www.vagrantup.com) have made it easy to get your environment setup, but you still need to get your relational database setup. In rails you can load your `db/schema.rb` and hope that `db/seeds.rb` is well curated, but seldom has enough to let a developer hit the ground running. Working with your production database while developing is extremely convenient. The [parity](http://12factor.net/dev-prod-parity) helps preview database performance. It also makes investigating data-specific bugs much easier. The goal of `dbcp` is to make copying databases between development, staging, and production environments as easy as copying a file on your local disk.
+Setting an employee up to work on a web application for the first time is time consuming. Tools like [Vagrant](http://www.vagrantup.com) have made it easy to get your environment setup, but you still need to get your relational database setup. In rails you can load your `db/schema.rb` and hope that `db/seeds.rb` is well curated, but seldom has enough to let a developer hit the ground running. Working with your production database while developing is extremely convenient. The [parity](http://12factor.net/dev-prod-parity) helps preview database performance. It also makes investigating data-specific bugs much easier.
+
+The goal of `dbcp` is to make copying databases between development, staging, and production environments as easy as copying a file on your local disk. It's an adapter for platform-specific utilities like `pg_dump` and `mysqldump`, simplifies lookup of credentials using storage mechanisms you're already using, and handles transfer of dump files between hosts.
 
 ## A word of caution
 
@@ -78,10 +80,18 @@ The following features are pending:
 
 Providers:
 
-- capistrano task
-- heroku, inferred from git remotes
+- Capistrano task
+- Heroku, environment name inferred from git remotes
 
 Features:
 
-- Reading configuration from a remote config/database.yml
 - Definable per-tool specific options, e.g. to allow pg_dump to provide a table exclusion list
+- URI Provider: specify an remote ssh execution host, perhaps using '@@' as a URI separator?
+
+Refactors:
+
+- Handle pg_restore warnings
+- Better logging
+- Better help
+
+[Open an issue](https://github.com/gabetax/dbcp/issues) if there's something else you'd like to see supported.
