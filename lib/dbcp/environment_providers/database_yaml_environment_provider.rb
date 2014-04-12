@@ -33,7 +33,7 @@ module Dbcp
         database = Database.build(environment_hash)
       rescue Database::BlankDatabaseDefinition => e
         if execution_host.remote?
-          database = Database.build fetch_remote_environment_hash(execution_host)[environment_name]
+          database = execution_host.remote_database
         else
           raise e
         end
@@ -44,10 +44,6 @@ module Dbcp
         database:         database,
         execution_host:   execution_host
       })
-    end
-
-    def fetch_remote_environment_hash(execution_host)
-      YAML.load execution_host.download "#{execution_host.path}/#{@database_yaml_path}"
     end
 
   end

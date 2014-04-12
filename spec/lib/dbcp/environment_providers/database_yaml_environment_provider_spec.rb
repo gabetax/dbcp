@@ -37,15 +37,11 @@ describe Dbcp::DatabaseYamlEnvironmentProvider do
       end
 
       context "without database definition, but with ssh_uri" do
-        let(:remote_yaml) { File.read remote_yaml_path }
-        let(:remote_yaml_path) { File.expand_path('../../../../fixtures/config/remote_database.yml', __FILE__) }
+        let(:remote_database) { double 'Dbcp::Database' }
         it "fetches database definition from database.yml on remote host" do
-          allow_any_instance_of(Dbcp::SshExecutionHost).to receive(:download).with('/www/staging.example.com/current/config/database.yml') { remote_yaml }
+          allow_any_instance_of(Dbcp::SshExecutionHost).to receive(:remote_database) { remote_database }
           environment = subject.find 'staging_ssh_only'
-          expect(environment.database).to be_a Dbcp::PostgresDatabase
-          expect(environment.database.database).to eq 'remote_staging_database'
-          expect(environment.database.username).to eq 'remote_staging_username'
-          expect(environment.database.password).to eq 'remote_staging_password'
+          expect(environment.database).to eq remote_database
         end
       end
     end

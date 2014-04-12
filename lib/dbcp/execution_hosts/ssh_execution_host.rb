@@ -77,5 +77,13 @@ module Dbcp
         return ssh.upload! source_path, destination_path
       end
     end
+
+    def remote_database(database_yaml_path, environment_name)
+      Database.build remote_yaml(database_yaml_path)[environment_name]
+    end
+
+    def remote_yaml(remote_yaml_path)
+      YAML.load download("#{path}/#{remote_yaml_path}")
+    end
   end
 end

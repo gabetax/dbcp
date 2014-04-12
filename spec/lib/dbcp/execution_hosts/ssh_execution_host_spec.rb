@@ -41,5 +41,23 @@ describe Dbcp::SshExecutionHost do
     end
   end
 
+  context "remote yaml" do
+    let(:local_yaml_path) { File.expand_path('../../../../fixtures/config/remote_database.yml', __FILE__) }
+    before { allow(subject).to receive(:download) { File.read local_yaml_path } }
+
+    describe "#remote_database" do
+      it "downloads and parses the YAML" do
+        database = subject.remote_database 'config/database.yml', 'staging_ssh_only'
+        expect(database).to be_a Dbcp::Database
+        expect(database.database).to eq 'remote_staging_database'
+      end
+    end
+
+    describe "#remote_yaml" do
+      it "downloads and parses the YAML" do
+        expect(subject.remote_yaml 'config/database.yml').to have_key('staging_ssh_only')
+      end
+    end
+  end
 
 end
