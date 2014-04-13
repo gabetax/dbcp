@@ -4,9 +4,6 @@ describe Dbcp::Cli do
   subject { Dbcp::Cli.new silent_stdout }
   let(:silent_stdout) { '/dev/null' }
 
-  extend ExecuteInDirectory
-  execute_in_directory(File.expand_path('../../../fixtures', __FILE__))
-
   describe "#start" do
     context "success" do
       let(:source)      { double 'Dbcp::Environment', database: double(adapter: 'postgres'), environment_name: 'staging' }

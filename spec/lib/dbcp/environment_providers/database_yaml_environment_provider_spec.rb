@@ -4,9 +4,6 @@ describe Dbcp::DatabaseYamlEnvironmentProvider do
   subject { Dbcp::DatabaseYamlEnvironmentProvider.new path }
   let(:path) { 'config/database.yml' }
 
-  extend ExecuteInDirectory
-  execute_in_directory(File.expand_path('../../../../fixtures', __FILE__))
-
   describe "#find" do
     context "when environment exists" do
       it "returns an environment" do
