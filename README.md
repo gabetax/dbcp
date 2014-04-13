@@ -74,19 +74,28 @@ You can use a database URI in place of an environment name as follows:
 
     $ dbcp postgres://my_username:my_pass@db.example.com/my_database development
 
+### Capistrano v3
+
+If you deploy your application via Capistrano, `dbcp` will lookup and invoke for a matching task name in your capistrano configuration to read the remote ssh and path information for the primary `:db` server role. It will ssh to that server both to read the remote remote `#{deploy_to}/current/config/database.yml` and execute the database export from.
+
+Example, with `config/deploy/staging.rb`
+
+```ruby
+server 'staging.example.com', user: 'staging', roles: %w{web app db}
+set :deploy_to, '/www/staging.example.com'
+```
+
+and separately defined `development` environment will allow you to run:
+
+    $ cap staging development
+
 ## Roadmap
 
 The following features are pending:
 
 Providers:
 
-- Capistrano task
 - Heroku, environment name inferred from git remotes
-
-Features:
-
-- Definable per-tool specific options, e.g. to allow pg_dump to provide a table exclusion list
-- URI Provider: specify an remote ssh execution host, perhaps using '@@' as a URI separator?
 
 Refactors:
 
@@ -94,4 +103,4 @@ Refactors:
 - Better logging
 - Better help
 
-[Open an issue](https://github.com/gabetax/dbcp/issues) if there's something else you'd like to see supported.
+Please [open an issue](https://github.com/gabetax/dbcp/issues) or send a pull request if you see a weird error, a database or environment definition you want supported, or anything you want to see improved.

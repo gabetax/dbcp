@@ -5,8 +5,9 @@ module Dbcp
   class Environment
     ENVIRONMENT_PROVIDERS = [
       DatabaseYamlEnvironmentProvider.new('config/database.yml'),
-      UriEnvironmentProvider.new
-    ]
+      UriEnvironmentProvider.new,
+      (Capistrano3EnvironmentProvider.new if defined?(Capistrano3EnvironmentProvider.new))
+    ].compact
 
     class << self
       def find(environment_name)
