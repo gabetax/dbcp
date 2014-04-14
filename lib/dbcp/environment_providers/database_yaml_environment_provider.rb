@@ -33,7 +33,7 @@ module Dbcp
         database = Database.build(environment_hash)
       rescue Database::BlankDatabaseDefinition => e
         if execution_host.remote?
-          database = execution_host.remote_database
+          database = execution_host.remote_database @database_yaml_path, environment_name
         else
           raise e
         end
