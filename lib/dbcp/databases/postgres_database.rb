@@ -6,6 +6,8 @@ module Dbcp
         '--host',     host,
         build_port,
         '--username', username,
+        '--no-acl',
+        '--no-owner',
         '--file',     snapshot_file.path,
         '--format',   'c',
         database
@@ -18,6 +20,8 @@ module Dbcp
         '--host',     host,
         build_port,
         '--username', username,
+        '--no-acl',
+        '--no-owner',
         '--dbname',   database,
         '--clean',
         snapshot_file.path
