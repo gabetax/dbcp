@@ -1,5 +1,6 @@
 module Dbcp
   class Cli
+
     DEFAULT_DESTINATION = 'development'
 
     def initialize(stdout = $stdout)
@@ -9,11 +10,7 @@ module Dbcp
       end
     end
 
-    def start(argv)
-      if argv.length < 1
-        usage
-        exit 1
-      end
+    def start(argv, opts=[])
 
       begin
         source = Environment.find(argv.shift)
@@ -46,8 +43,5 @@ module Dbcp
       destination_snapshot_file.delete if source_snapshot_file != destination_snapshot_file
     end
 
-    def usage
-      @logger.fatal "Usage: #{$0} source_environment [destination_environment || #{DEFAULT_DESTINATION}]"
-    end
   end
 end

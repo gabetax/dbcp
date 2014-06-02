@@ -26,12 +26,6 @@ describe Dbcp::Cli do
       end
     end
 
-    context "too few arguments" do
-      it "exits" do
-        expect { subject.start [] }.to raise_error(SystemExit)
-      end
-    end
-
     context "two different database types" do
       it "exist" do
         expect { subject.start ['development', 'sqlite'] }.to raise_error(SystemExit)
