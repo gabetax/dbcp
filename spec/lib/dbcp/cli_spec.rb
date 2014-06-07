@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Dbcp::Cli do
+
   subject { Dbcp::Cli }
-  let!(:silent_stdout) { Dbcp.logger = Dbcp::Log.silent }
 
   describe "#start" do
     context "success" do
@@ -23,18 +23,6 @@ describe Dbcp::Cli do
         expect(destination_snapshot_file).to receive(:delete)
 
         subject.start ['staging']
-      end
-    end
-
-    context "two different database types" do
-      it "exist" do
-        expect { subject.start ['development', 'sqlite'] }.to raise_error(SystemExit)
-      end
-    end
-
-    context "environments are the same" do
-      it "exits" do
-        expect { subject.start ['development', 'development'] }.to raise_error(SystemExit)
       end
     end
   end

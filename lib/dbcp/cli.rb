@@ -1,6 +1,8 @@
 module Dbcp
   class Cli
 
+    require 'dbcp/cli/validate'
+
     DEFAULT_DESTINATION = 'development'
 
     def self.start(argv, opts=[])
@@ -8,16 +10,7 @@ module Dbcp
       begin
         source = Environment.find(argv.shift)
         destination = Environment.find(argv.shift || DEFAULT_DESTINATION)
-
-        if source == destination
-          Dbcp.logger.fatal "source and destination environments are the same"
-          exit 3
-        end
-
-        if source.database.adapter != destination.database.adapter
-          Dbcp.logger.fatal "source (#{source.database.adapter}) and destination (#{destination.database.adapter}) environments must be the same database type"
-          exit 4
-        end
+        Validate.new(source, destination).run
       rescue EnvironmentNotFound => e
         Dbcp.logger.fatal e.to_s
         exit 2
