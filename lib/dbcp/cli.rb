@@ -2,6 +2,7 @@ module Dbcp
   class Cli
 
     require 'dbcp/cli/validate'
+    require 'dbcp/cli/copy'
 
     DEFAULT_DESTINATION = 'development'
 
@@ -16,17 +17,7 @@ module Dbcp
         exit 2
       end
 
-      Dbcp.logger.info "exporting #{source.environment_name}..."
-      source_snapshot_file = source.export
-
-      Dbcp.logger.info "transferring data..."
-      destination_snapshot_file = source_snapshot_file.transfer_to(destination)
-
-      Dbcp.logger.info "importing #{destination_snapshot_file.path} to #{destination.environment_name}..."
-      destination.import destination_snapshot_file
-
-      source_snapshot_file.delete
-      destination_snapshot_file.delete if source_snapshot_file != destination_snapshot_file
+      Copy.new(source, destination).run
     end
 
   end
