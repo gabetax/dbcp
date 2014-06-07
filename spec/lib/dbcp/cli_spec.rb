@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Dbcp::Cli do
-  subject { Dbcp::Cli.new silent_stdout }
-  let(:silent_stdout) { '/dev/null' }
+  subject { Dbcp::Cli }
+  let!(:silent_stdout) { Dbcp.logger = Dbcp::Log.silent }
 
   describe "#start" do
     context "success" do

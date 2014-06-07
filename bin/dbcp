@@ -19,7 +19,7 @@ opts = Slop.parse(help: true) do
       puts help
       exit 1
     else
-      Dbcp::Cli.new.start(args, opts)
+      Dbcp::Cli.start(args, opts)
     end
   end
 end
