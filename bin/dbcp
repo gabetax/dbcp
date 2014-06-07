@@ -4,22 +4,5 @@ lib = File.expand_path('../../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'dbcp'
-require 'slop'
 
-opts = Slop.parse(help: true) do
-  banner "Usage: #{$0} source_environment [destination_environment || #{Dbcp::Cli::DEFAULT_DESTINATION}]"
-
-  on :v, :version, 'Print the Version' do
-    puts "dbcp #{Dbcp::VERSION}"
-    exit
-  end
-
-  run do |opts, args|
-    if args.empty?
-      puts help
-      exit 1
-    else
-      Dbcp::Cli.start(args, opts)
-    end
-  end
-end
+Dbcp::Cli::Parse.run ARGV

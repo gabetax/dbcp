@@ -1,13 +1,11 @@
 module Dbcp
   class Cli
-
-    require 'dbcp/cli/validate'
     require 'dbcp/cli/copy'
+    require 'dbcp/cli/validate'
 
     DEFAULT_DESTINATION = 'development'
 
     def self.start(argv, opts=[])
-
       begin
         source = Environment.find(argv.shift)
         destination = Environment.find(argv.shift || DEFAULT_DESTINATION)
