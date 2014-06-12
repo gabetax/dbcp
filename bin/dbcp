@@ -5,4 +5,4 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'dbcp'
 
-Dbcp::Cli.new.start ARGV
+Dbcp::Cli::Parser.run ARGV

@@ -2,6 +2,8 @@ require 'logger'
 require 'shellwords'
 require 'virtus'
 require 'dbcp/cli'
+require 'dbcp/cli/parser'
+require 'dbcp/log'
 require 'dbcp/database'
 require 'dbcp/databases/mysql_database'
 require 'dbcp/databases/postgres_database'
@@ -16,4 +18,11 @@ require 'dbcp/database_snapshot_file'
 require 'dbcp/version'
 
 module Dbcp
+  class << self
+    attr_writer :logger
+
+    def logger
+      @logger ||= Dbcp::Log.stdout
+    end
+  end
 end
