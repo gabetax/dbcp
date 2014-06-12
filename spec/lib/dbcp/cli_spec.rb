@@ -8,12 +8,12 @@ describe Dbcp::Cli do
 
     before do
       Dbcp::Environment.stub(:find) { 'db' }
-      Dbcp::Cli::Validate.any_instance.stub(:run)
+      Dbcp::Cli::Validator.any_instance.stub(:run)
       Dbcp::Cli::Copy.any_instance.stub(:run)
     end
 
     it "validates the databases" do
-      expect_any_instance_of(Dbcp::Cli::Validate).to receive(:run)
+      expect_any_instance_of(Dbcp::Cli::Validator).to receive(:run)
       subject.start []
     end
 

@@ -1,7 +1,7 @@
 module Dbcp
   class Cli
     require 'dbcp/cli/copy'
-    require 'dbcp/cli/validate'
+    require 'dbcp/cli/validator'
 
     DEFAULT_DESTINATION = 'development'
 
@@ -9,7 +9,7 @@ module Dbcp
       begin
         source = Environment.find(argv.shift)
         destination = Environment.find(argv.shift || DEFAULT_DESTINATION)
-        Validate.new(source, destination).run
+        Validator.new(source, destination).run
       rescue EnvironmentNotFound => e
         Dbcp.logger.fatal e.to_s
         exit 2

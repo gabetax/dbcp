@@ -1,5 +1,5 @@
 module Dbcp
-  class Cli::Parse
+  class Cli::Parser
 
     require 'slop'
 

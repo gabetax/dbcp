@@ -1,5 +1,5 @@
 module Dbcp
-  class Cli::Validate
+  class Cli::Validator
 
     def initialize(source, destination)
       @source, @destination = source, destination

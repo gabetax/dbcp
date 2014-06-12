@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Dbcp::Cli::Validate do
+describe Dbcp::Cli::Validator do
 
-  subject { Dbcp::Cli::Validate }
+  subject { Dbcp::Cli::Validator }
   let(:mysql_source)      { double 'Dbcp::Environment', database: double(adapter: 'mysql'), environment_name: 'staging' }
   let(:mysql_destination) { double 'Dbcp::Environment', database: double(adapter: 'mysql'), environment_name: 'development' }
   let(:postgres_destination) { double 'Dbcp::Environment', database: double(adapter: 'postgres'), environment_name: 'development' }
